@@ -14,10 +14,24 @@ class App extends React.Component {
   }
 
   search (term) {
+    var self = this;
     console.log(`${term} was searched`);
     // TODO
-    $.post('/repos', {'username': term});
+    $.post('/repos', {'username': term}, (response) => {
+      console.log(response);
+      var self = self;
+      // $.get('/repos', (response) => {
+      //   // self.state.repos = response //response should be the top 25
+      // });
+    });
   }
+
+  // top25() { //update the top 25 repos on page load and after search response
+  //   console.log('Fetching top 25 repos');
+  //   $.get('/repos', (response) => {
+  //     console.log(response);
+  //   })
+  // }
 
   render () {
     return (<div>
