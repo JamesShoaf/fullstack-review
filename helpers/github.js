@@ -4,7 +4,7 @@ const config = require('../config.js');
 //basic version will simply return the first page of results without doing any concat
 const getReposByUsername = (username, callback) => {
   let options = {
-    url: '/users/' + username + '/repos',
+    url: 'https://api.github.com/users/' + username + '/repos',
     headers: {
       'User-Agent': 'request',
       'Authorization': `token ${config.TOKEN}`,
@@ -12,7 +12,7 @@ const getReposByUsername = (username, callback) => {
     }
   };
   // request.get('url', options, callback);
-  request.get('https://api.github.com/', options, (err, response, data) => {
+  request.get(options, (err, response, data) => {
     if (err) { //log errors and pass them back to the callback function
       console.log(err);
       return callback(err, null);
