@@ -1,13 +1,16 @@
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/fetcher');
 
-let repoSchema = mongoose.Schema({
+let repoSchema = mongoose.Schema({ //using mongoose.schema here means that the model will use the default connection, as opposed to the connection specific to a particular mongo database
   // TODO: your schema here!
-  /* ownerName: String,
+  /* repoID: Number
+  ownerName: String,
   repoName: String,
   repoScore: Number,
   repoURL: String */
 });
+
+//db.fetcher.createIndex( {"repoID": 1}, {unique: true} )
 
 let Repo = mongoose.model('Repo', repoSchema);
 

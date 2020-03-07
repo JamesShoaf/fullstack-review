@@ -1,17 +1,23 @@
 const express = require('express');
 let app = express();
+var github = require('../helpers/github.js'); //(username, callback) => {}
+console.log(github);
 
 
 app.use(express.static(__dirname + '/../client/dist'));
 
-app.use('/repos', express.urlencoded()); //parses urlencoded data sent to the server.
+app.use('/repos', express.urlencoded({ 'extended': true })); //parses urlencoded data sent to the server.
 
 app.post('/repos', function (req, res) {
   // TODO - your code here!
   // This route should take the github username provided
   console.log(req.body);
-  // and get the repo information from the github API, then
 
+  // and get the repo information from the github API, then
+  github.getReposByUsername(req.body.username, (err, data) => {
+    console.log(data);
+    res.send('Get achieved!');
+  })
   // save the repo information in the database
 });
 
