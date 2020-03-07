@@ -33,6 +33,7 @@ let getReposByUsername = (username, callback) => {
         //concat the page to the last set of results
         var repoArray = cumulativeRepos.concat(repoArray);
         console.log(`There are at least ${repoArray.length} repos here!`)
+        //and call the recursive get function
         getHelper(null, callback, options, pageNumber+1);
       } else {
         //for everything else, just pass the results to the callback function (probably res.send())
