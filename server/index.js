@@ -13,14 +13,10 @@ app.use('/repos', express.urlencoded({ 'extended': true })); //parses urlencoded
 app.post('/repos', function (req, res) {
   // TODO - your code here!
   // This route should take the github username provided
-  console.log(req.body);
   var repoArray = [];
   // and get the repo information from the github API, then
   github.getReposByUsername(req.body.username, (err, data) => {
-    // console.log(data);
-    // res.send(data);
     repoArray = JSON.parse(data);
-    console.log(repoArray, repoArray.length);
     // save the repo information in the database
     db.save(repoArray)
     .then(results => res.send(`${req.body.username} has been added to the database`))

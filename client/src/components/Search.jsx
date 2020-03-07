@@ -11,11 +11,7 @@ class Search extends React.Component {
   onChange (e) {
     this.setState({
       term: e.target.value
-    }
-    // }, () => {
-    //   console.log(this.state.term);
-    // }
-    );
+    });
   }
 
   search() {

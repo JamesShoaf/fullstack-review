@@ -29,7 +29,6 @@ class App extends React.Component {
       })
     };
     var postCallback = (response) => {
-      console.log(response);
       $.get('/repos', getCallback);
     }
     $.post('/repos', {'username': term}, postCallback);
