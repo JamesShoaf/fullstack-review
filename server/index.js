@@ -23,8 +23,8 @@ app.post('/repos', function (req, res) {
     console.log(repoArray, repoArray.length);
     // save the repo information in the database
     db.save(repoArray)
-    .then(results => res.send('User has been added to the database'))
-    .catch(error => res.send('User\'s record has been updated!'))
+    .then(results => res.send(`${req.body.username} has been added to the database`))
+    .catch(error => res.send(`${req.body.username}'s record has been updated!`))
   })
 });
 
