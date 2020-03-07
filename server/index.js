@@ -3,6 +3,7 @@ let app = express();
 var github = require('../helpers/github.js'); //(username, callback) => {}
 // console.log(github);
 // import github from '../helpers/github.js';
+const db = require('../database/index.js');
 
 
 app.use(express.static(__dirname + '/../client/dist'));
@@ -21,13 +22,21 @@ app.post('/repos', function (req, res) {
     repoArray = JSON.parse(data);
     console.log(repoArray, repoArray.length);
     // save the repo information in the database
-
+    db.save(repoArray)
+    .then(results => res.send('User has been added to the database'))
+    .catch(error => res.send('User\'s record has been updated!'))
   })
 });
 
 app.get('/repos', function (req, res) {
   // TODO - your code here!
   // This route should send back the top 25 repos
+  db.query25((err, top25) => {
+    if (err) {
+      res.send(err);
+    }
+    res.send(top25);
+  })
   //read from database
   //return an array of 25 repos
 });

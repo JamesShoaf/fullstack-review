@@ -6,7 +6,7 @@ let repoSchema = mongoose.Schema({ //using mongoose.schema here means that the m
   repoID: {
     type: Number,
     unique: true
-  }
+  },
   ownerName: String,
   repoName: String,
   repoURL: String,
@@ -21,7 +21,7 @@ let repoSchema = mongoose.Schema({ //using mongoose.schema here means that the m
 
 let Repo = mongoose.model('Repo', repoSchema);
 
-let save = (repoArray, callback) => {
+let save = (repoArray) => { //returns a promise.all of an array of saves
   const repoScore = (repoObj) => {
     var stars = repoObj.stargazers_count +1; //adding 1 makes using the log function in the next step more convenient
     var forks = repoObj.forks_count +1;
@@ -39,7 +39,7 @@ let save = (repoArray, callback) => {
   // TODO: Your code here
   // This function should save a repo or repos to
   // the MongoDB
-  var documentArray = [];
+  var savePromises = [];
   for (let i = 0; i < repoArray.length; i++) {
     var currentRepo = repoArray[i];
     var currentRepoScore = repoScore(currentRepo);
@@ -55,8 +55,16 @@ let save = (repoArray, callback) => {
       repoOpenIssues: currentRepo.open_issues_count,
       repoHasWiki: currentRepo.has_wiki
     });
-    documentArray.push(repoDocument);
+    savePromises.push(repoDocument.save());
   }
+  return Promise.all(savePromises);
+  // .then(callback(null, true)) //tell the callback function that we're done
+  // .catch((err) => callback(err, null))
 }
 
+let query25 = (callback) => {
+  Repo.find({}).sort({'repoScore': -1}).limit(25).exec(callback);
+};
+
 module.exports.save = save;
+module.exports.query25 = query25;

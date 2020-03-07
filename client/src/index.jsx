@@ -15,7 +15,7 @@ class App extends React.Component {
 
   search (term) {
     var self = this;
-    console.log(`${term} was searched`);
+    console.log(`Pulling repos from user ${term}`);
     // TODO
     $.post('/repos', {'username': term}, (response) => {
       console.log(response);
